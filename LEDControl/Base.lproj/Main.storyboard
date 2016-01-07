@@ -52,6 +52,9 @@
                                         <exclude reference="yYd-jI-qAo"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="ipAddressChanged:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="0ya-9D-n45"/>
+                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vip-tQ-ilL">
                                 <rect key="frame" x="20" y="86" width="560" height="377"/>
@@ -119,6 +122,9 @@
                                 <exclude reference="g4w-SA-HHM"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="1uZ-aV-G5j" appends="YES" id="QOG-ky-vlP"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="sO8-7Y-t0m" id="qYt-vK-rZa"/>
@@ -128,6 +134,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="1uZ-aV-G5j">
+                    <connections>
+                        <action selector="viewWasTapped:" destination="BYZ-38-t0r" id="ei8-tD-Ihc"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="183" y="386"/>
         </scene>

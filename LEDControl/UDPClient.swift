@@ -15,6 +15,7 @@ func htons(value: CUnsignedShort) -> CUnsignedShort {
 class UDPClient {
     
     let port: CUnsignedShort
+    let ip: String
     
     let INADDR_ANY = in_addr(s_addr: 0)
     
@@ -23,6 +24,7 @@ class UDPClient {
     
     init(ip: String, port: CUnsignedShort) {
         self.port = port
+        self.ip = ip
         self.addr = sockaddr_in(
             sin_len:    __uint8_t(sizeof(sockaddr_in)),
             sin_family: sa_family_t(AF_INET),
@@ -42,4 +44,13 @@ class UDPClient {
         }
     }
     
+    func send(message: String) {
+        message.withCString { cstr -> Void in
+            withUnsafePointer(&addr) { ptr -> Void in
+                let addrptr = UnsafePointer<sockaddr>(ptr)
+                sendto(fd, cstr, Int(strlen(cstr)), 0,
+                    addrptr, socklen_t(addr.sin_len))
+            }
+        }
+    }
 }
