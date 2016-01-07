@@ -26,7 +26,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NSW-OD-CqP">
-                                <rect key="frame" x="58" y="500" width="484" height="31"/>
+                                <rect key="frame" x="38" y="500" width="524" height="31"/>
                                 <connections>
                                     <action selector="brightnessSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="KIm-Hh-lAG"/>
                                 </connections>
@@ -87,6 +87,7 @@
                             <constraint firstItem="Vip-tQ-ilL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="NbT-j0-XMn"/>
                             <constraint firstItem="io1-Sp-SD6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="Osw-ih-iGc"/>
                             <constraint firstItem="HXb-yd-Xpp" firstAttribute="top" secondItem="sO8-7Y-t0m" secondAttribute="bottom" constant="8" symbolic="YES" id="P06-i6-WK4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NSW-OD-CqP" secondAttribute="trailing" constant="20" id="PKp-hy-y8O"/>
                             <constraint firstItem="HXb-yd-Xpp" firstAttribute="top" secondItem="sO8-7Y-t0m" secondAttribute="bottom" constant="8" id="QLS-43-0Bq"/>
                             <constraint firstItem="x1e-5a-OQf" firstAttribute="leading" secondItem="io1-Sp-SD6" secondAttribute="trailing" constant="40" id="RsV-SB-b0b"/>
                             <constraint firstItem="io1-Sp-SD6" firstAttribute="top" secondItem="x1e-5a-OQf" secondAttribute="bottom" constant="8" id="Tb4-3o-oWF"/>
@@ -94,6 +95,7 @@
                             <constraint firstItem="Vip-tQ-ilL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YcZ-m4-82N"/>
                             <constraint firstAttribute="bottom" secondItem="sO8-7Y-t0m" secondAttribute="bottom" constant="25" id="ZIS-A0-g5d"/>
                             <constraint firstItem="sO8-7Y-t0m" firstAttribute="top" secondItem="NSW-OD-CqP" secondAttribute="bottom" constant="40" id="adj-0F-79d"/>
+                            <constraint firstItem="NSW-OD-CqP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="buN-x6-PlV"/>
                             <constraint firstItem="sO8-7Y-t0m" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="cEl-nH-ESI"/>
                             <constraint firstItem="sO8-7Y-t0m" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g4w-SA-HHM"/>
                             <constraint firstItem="HXb-yd-Xpp" firstAttribute="top" secondItem="NSW-OD-CqP" secondAttribute="bottom" constant="20" id="iMd-fc-YCz"/>
@@ -113,6 +115,8 @@
                                 <exclude reference="3AP-Q4-vHl"/>
                                 <exclude reference="7oR-es-9c3"/>
                                 <exclude reference="BxD-h6-wph"/>
+                                <exclude reference="LKh-rK-foK"/>
+                                <exclude reference="sTx-Gf-ynl"/>
                                 <exclude reference="A5x-G2-F0l"/>
                                 <exclude reference="P06-i6-WK4"/>
                                 <exclude reference="QLS-43-0Bq"/>
