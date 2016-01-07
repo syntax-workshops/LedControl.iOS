@@ -129,7 +129,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="sO8-7Y-t0m" id="qYt-vK-rZa"/>
                         <outlet property="colorWheelView" destination="Vip-tQ-ilL" id="GBI-Gl-7Ea"/>
-                        <outlet property="ipAddress" destination="io1-Sp-SD6" id="9wn-fv-rk9"/>
+                        <outlet property="ipAddress" destination="io1-Sp-SD6" id="b0f-1F-N9G"/>
                         <outlet property="sendButton" destination="HXb-yd-Xpp" id="zGu-j3-ee4"/>
                     </connections>
                 </viewController>

@@ -23,15 +23,11 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     var timer: NSTimer?
     let interval: NSTimeInterval = 0.9
     
-    // MARK: Outlets
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var colorWheelView: UIView!
     @IBOutlet weak var ipAddress: UITextField!
     @IBOutlet weak var sendButton: UIButton!
-    
-    // MARK: Actions
     
     var brightnessChange: CGFloat = 0
     @IBAction func brightnessSliderChanged(sender: UISlider) {
@@ -68,6 +64,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     private func updateIpAddress() {
         if ipAddress.text != "" && ipAddress.text != nil {
             ip = ipAddress.text!
+            NSUserDefaults.standardUserDefaults().setValue(ip, forKey: "ledStripIpAddress")
         }
         if sending {
             stopSending()
@@ -128,7 +125,9 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress")!
         ipAddress.text = ip
+        udpClient = UDPClient(ip: ip, port: port)
 
         let size = self.view.bounds.size
         
@@ -141,11 +140,9 @@ class ViewController: UIViewController, ISColorWheelDelegate {
             wheelSize.height
         ))
         colorWheel.delegate = self
-        colorWheel.borderWidth = 0.5
+        colorWheel.borderWidth = 1
         self.colorWheelView.addSubview(colorWheel)
         colorWheel.continuous = true
-        
-        startSending()
     }
 
     override func didReceiveMemoryWarning() {
@@ -161,7 +158,6 @@ class ViewController: UIViewController, ISColorWheelDelegate {
 }
 
 extension UIColor {
-    
     func rgb() -> (CGFloat, CGFloat, CGFloat) {
         var fRed: CGFloat = 0
         var fGreen: CGFloat = 0
