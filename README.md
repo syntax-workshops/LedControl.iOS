@@ -25,6 +25,8 @@ The app works by sending R, G and B bytes for each LED over UDP. For example, if
 
 This project makes use of the [ios-color-wheel](https://github.com/justinmeiners/ios-color-wheel) library by Justin Meiners, which is MIT licensed.
 
+The app icon is based on: [LED by Dmitry Mirolyubov from the Noun Project](https://thenounproject.com/search/?q=led&i=120701).
+
 ## License
 
 MIT, see `LICENSE.txt`
