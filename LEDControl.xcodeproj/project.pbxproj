@@ -304,6 +304,7 @@
 				D51CAEC31C3D94780025EFED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
