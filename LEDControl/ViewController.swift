@@ -42,7 +42,6 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         brightnessChange += abs(oldBrightness - newBrightness)
         
         if brightnessChange >= threshold {
-            print("Updating brightness \(oldBrightness) -> \(newBrightness)")
             brightnessChange = 0
             sendMessage()
         }
@@ -69,7 +68,6 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     private func updateIpAddress() {
         if ipAddress.text != "" && ipAddress.text != nil {
             ip = ipAddress.text!
-            print("ip address set to \(ip), port \(port)")
         }
         if sending {
             stopSending()
@@ -105,9 +103,8 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     
     func sendMessage() {
         if sending {
-            print("Sending message to \(udpClient.ip), rgb: \(color.rgb()), brightness: \(brightness)")
-//            let message = composeMessageFromColor()
-//            udpClient.send(message)
+            let message = composeMessageFromColor()
+            udpClient.send(message)
         }
     }
     
