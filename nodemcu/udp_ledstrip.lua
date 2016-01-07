@@ -16,18 +16,24 @@ port = 80
 wifi.setmode(wifi.STATION)
 wifi.sta.config(ssid, psk)
 print(wifi.sta.getip())
-
--- Turn all LEDs off
-ws2812.write(pin, string.char( 0,  0,  0):rep(pixels))
+print("LED server starting!")
 
 if srv then
     srv:close()
-    srv = nil
+    srv=nil
 end
 
-srv = net.createServer(net.UDP)
+srv=net.createServer(net.UDP)
 
 srv:on("receive", function(client, data)
     ws2812.write(pin, data)
 end)
-srv:listen(port)
+
+srv:listen(80)
+print("LED server running!")
+
+tmr.alarm(1, 1000, 1, function()
+    ws2812.write(pin, string.char( 0,  0,  0):rep(pixels))
+    print("Cleared all LED's")
+    tmr.stop(1)
+end)
