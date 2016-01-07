@@ -39,7 +39,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         
         if brightnessChange >= threshold {
             brightnessChange = 0
-            sendMessage()
+            forceSendMessage()
         }
     }
     
@@ -105,6 +105,11 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         }
     }
     
+    private func forceSendMessage() {
+        let message = composeMessageFromColor()
+        udpClient.send(message)
+    }
+    
     private func composeMessageFromColor() -> [UInt8] {
         var message = [UInt8]()
         
@@ -153,7 +158,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
 
     func colorWheelDidChangeColor(colorWheel: ISColorWheel) {
         color = colorWheel.currentColor
-        sendMessage()
+        forceSendMessage()
     }
 }
 
