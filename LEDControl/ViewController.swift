@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController, ISColorWheelDelegate {
-
-    var sending: Bool = false // Are we currently sending packets to the LED strip?
     
     let ledcount = 83
     var ip: String = "192.168.1.221"
@@ -19,15 +17,11 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     
     var color: UIColor = UIColor.whiteColor()
     var brightness: CGFloat = 1.0
-    
-    var timer: NSTimer?
-    let interval: NSTimeInterval = 0.9
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    var sending: Bool = false
     
     @IBOutlet weak var colorWheelView: UIView!
     @IBOutlet weak var ipAddress: UITextField!
-    @IBOutlet weak var sendButton: UIButton!
     
     var brightnessChange: CGFloat = 0
     @IBAction func brightnessSliderChanged(sender: UISlider) {
@@ -39,22 +33,12 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         
         if brightnessChange >= threshold {
             brightnessChange = 0
-            forceSendMessage()
+            sendMessage()
         }
     }
     
     @IBAction func ipAddressChanged(sender: AnyObject) {
         updateIpAddress()
-    }
-    
-    @IBAction func sendButtonPressed(sender: UIButton) {
-        updateIpAddress()
-        
-        if sending {
-            stopSending()
-        } else {
-            startSending()
-        }
     }
     
     @IBAction func viewWasTapped(sender: AnyObject) {
@@ -66,36 +50,9 @@ class ViewController: UIViewController, ISColorWheelDelegate {
             ip = ipAddress.text!
             NSUserDefaults.standardUserDefaults().setValue(ip, forKey: "ledStripIpAddress")
         }
-        if sending {
-            stopSending()
-            udpClient = UDPClient(ip: ip, port: port)
-            startSending()
-        } else {
-            stopSending()
-            udpClient = UDPClient(ip: ip, port: port)
-        }
-    }
-    
-    func startSending() {
-        sending = true
-        
-        sendButton.setTitle("Stop met zenden", forState: .Normal)
-        activityIndicator.startAnimating()
-        
-        createTimer()
-        timer?.fire()
-    }
-    
-    func stopSending() {
         sending = false
-        sendButton.setTitle("Start met zenden", forState: .Normal)
-        activityIndicator.stopAnimating()
-        timer?.invalidate()
-    }
-    
-    private func createTimer() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(interval,
-            target: self, selector: "sendMessage", userInfo: nil, repeats: true)
+        udpClient = UDPClient(ip: ip, port: port)
+        sending = true
     }
     
     func sendMessage() {
@@ -103,11 +60,6 @@ class ViewController: UIViewController, ISColorWheelDelegate {
             let message = composeMessageFromColor()
             udpClient.send(message)
         }
-    }
-    
-    private func forceSendMessage() {
-        let message = composeMessageFromColor()
-        udpClient.send(message)
     }
     
     private func composeMessageFromColor() -> [UInt8] {
@@ -153,12 +105,11 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        stopSending()
     }
 
     func colorWheelDidChangeColor(colorWheel: ISColorWheel) {
         color = colorWheel.currentColor
-        forceSendMessage()
+        sendMessage()
     }
 }
 
