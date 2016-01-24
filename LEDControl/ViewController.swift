@@ -10,25 +10,68 @@ import UIKit
 
 class ViewController: UIViewController, ISColorWheelDelegate {
     
-    let ledcount = 83
-    var ip: String = "192.168.1.221"
-    let port: CUnsignedShort = 80
-    var udpClient = UDPClient(ip: "192.168.1.221", port: 80)
-    
-    var color: UIColor = UIColor.whiteColor()
-    var brightness: CGFloat = 1.0
+    class LEDStrip {
+        let ledcount: Int
+        
+        var ip: String
+        let port: CUnsignedShort = 80
+        
+        var udpClient: UDPClient
+        
+        var color: UIColor = UIColor.whiteColor()
+        var brightness: CGFloat = 1.0
+        
+        init(count: Int) {
+            ledcount = count
+            ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress")!
+            
+            udpClient = UDPClient(ip: ip, port: port)
+        }
+        
+        func reload() {
+            udpClient = UDPClient(ip: ip, port: port)
+        }
+        
+        func send(message: [UInt8]) {
+            udpClient.send(message)
+        }
+    }
 
-    var sending: Bool = false
+    var strip: LEDStrip = LEDStrip(count: 83)
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        ipAddress.text = strip.ip
+        
+        // Set up color wheel
+        let size = self.view.bounds.size
+        let wheelSize = CGSizeMake(size.width * 0.9, size.width * 0.9);
+        
+        let colorWheel = ISColorWheel.init(frame: CGRectMake(
+            size.width / 2 - wheelSize.width / 2 - 16, // Yay, ugly UI code
+            size.height * 0.1,
+            wheelSize.width,
+            wheelSize.height
+        ))
+        colorWheel.delegate = self
+        colorWheel.borderWidth = 1
+        self.colorWheelView.addSubview(colorWheel)
+        colorWheel.continuous = true
+    }
+
     @IBOutlet weak var colorWheelView: UIView!
     @IBOutlet weak var ipAddress: UITextField!
     
     var brightnessChange: CGFloat = 0
+    
     @IBAction func brightnessSliderChanged(sender: UISlider) {
-        let oldBrightness = brightness
+        ipAddress.resignFirstResponder()
+        
+        let oldBrightness = strip.brightness
         let newBrightness = CGFloat(sender.value)
-        let threshold: CGFloat = 0.1
-        brightness = newBrightness
+        let threshold: CGFloat = 0.05
+        strip.brightness = newBrightness
         brightnessChange += abs(oldBrightness - newBrightness)
         
         if brightnessChange >= threshold {
@@ -47,22 +90,18 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     
     private func updateIpAddress() {
         if ipAddress.text != "" && ipAddress.text != nil {
-            ip = ipAddress.text!
-            NSUserDefaults.standardUserDefaults().setValue(ip, forKey: "ledStripIpAddress")
+            strip.ip = ipAddress.text!
+            NSUserDefaults.standardUserDefaults().setValue(strip.ip, forKey: "ledStripIpAddress")
         }
-        sending = false
-        udpClient = UDPClient(ip: ip, port: port)
-        sending = true
+        strip.reload()
     }
     
     func sendMessage() {
-        if sending {
-            let message = composeMessageFromColor()
-            udpClient.send(message)
-        }
+        let message = composeMessageFromColor(color: strip.color, ledcount: strip.ledcount, brightness: strip.brightness)
+        strip.send(message)
     }
     
-    private func composeMessageFromColor() -> [UInt8] {
+    private func composeMessageFromColor(color color: UIColor, ledcount: Int, brightness: CGFloat) -> [UInt8] {
         var message = [UInt8]()
         
         let rgb = color.rgb()
@@ -71,44 +110,17 @@ class ViewController: UIViewController, ISColorWheelDelegate {
                 g = rgb.1,
                 b = rgb.2
             
-            message.append(UInt8(g*brightness))
-            message.append(UInt8(r*brightness))
-            message.append(UInt8(b*brightness))
+            message.append(UInt8(g * brightness))
+            message.append(UInt8(r * brightness))
+            message.append(UInt8(b * brightness))
         }
         
         return message
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress")!
-        ipAddress.text = ip
-        udpClient = UDPClient(ip: ip, port: port)
-
-        let size = self.view.bounds.size
-        
-        let wheelSize = CGSizeMake(size.width * 0.9, size.width * 0.9);
-        
-        let colorWheel = ISColorWheel.init(frame: CGRectMake(
-            size.width / 2 - wheelSize.width / 2 - 16,
-            size.height * 0.1,
-            wheelSize.width,
-            wheelSize.height
-        ))
-        colorWheel.delegate = self
-        colorWheel.borderWidth = 1
-        self.colorWheelView.addSubview(colorWheel)
-        colorWheel.continuous = true
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     func colorWheelDidChangeColor(colorWheel: ISColorWheel) {
-        color = colorWheel.currentColor
+        ipAddress.resignFirstResponder()
+        strip.color = colorWheel.currentColor
         sendMessage()
     }
 }
