@@ -10,7 +10,8 @@ import UIKit
 
 let defaultPreferences = [
     "ledStripIpAddress": "192.168.1.221",
-    "ledStripPort": 80
+    "ledStripPort": 80,
+    "ledStripCount": 30,
 ]
 
 @UIApplicationMain

@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, ISColorWheelDelegate {
     
     class LEDStrip {
-        let ledcount: Int
+        var ledcount: Int
         
         var ip: String
         let port: CUnsignedShort = 80
@@ -23,7 +23,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         
         init(count: Int) {
             ledcount = count
-            ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress")!
+            ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress") ?? "192.168.1.42"
             
             udpClient = UDPClient(ip: ip, port: port)
         }
@@ -37,12 +37,14 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         }
     }
 
-    var strip: LEDStrip = LEDStrip(count: 83)
+    var strip: LEDStrip = LEDStrip(count: NSUserDefaults.standardUserDefaults().integerForKey("ledStripCount"))
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ipAddress.text = strip.ip
+        countTextField.text = String(strip.ledcount)
         
         // Set up color wheel
         let size = self.view.bounds.size
@@ -60,6 +62,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         colorWheel.continuous = true
     }
 
+    @IBOutlet weak var countTextField: UITextField!
     @IBOutlet weak var colorWheelView: UIView!
     @IBOutlet weak var ipAddress: UITextField!
     
@@ -81,21 +84,26 @@ class ViewController: UIViewController, ISColorWheelDelegate {
     }
     
     @IBAction func ipAddressChanged(sender: AnyObject) {
-        updateIpAddress()
+      if let newAddress = ipAddress.text {
+        strip.ip = newAddress
+        NSUserDefaults.standardUserDefaults().setValue(newAddress, forKey: "ledStripIpAddress")
+      }
+      strip.reload()
     }
-    
+
+  @IBAction func countChanged(sender: AnyObject) {
+    guard let text = countTextField.text, count = Int(text) where count >= 0 else { return }
+
+    strip.ledcount = count
+    NSUserDefaults.standardUserDefaults().setValue(countTextField.text, forKey: "ledStripCount")
+
+  }
+
     @IBAction func viewWasTapped(sender: AnyObject) {
         ipAddress.resignFirstResponder()
+      countTextField.resignFirstResponder()
     }
-    
-    private func updateIpAddress() {
-        if ipAddress.text != "" && ipAddress.text != nil {
-            strip.ip = ipAddress.text!
-            NSUserDefaults.standardUserDefaults().setValue(strip.ip, forKey: "ledStripIpAddress")
-        }
-        strip.reload()
-    }
-    
+
     func sendMessage() {
         let message = composeMessageFromColor(color: strip.color, ledcount: strip.ledcount, brightness: strip.brightness)
         strip.send(message)
@@ -105,7 +113,7 @@ class ViewController: UIViewController, ISColorWheelDelegate {
         var message = [UInt8]()
         
         let rgb = color.rgb()
-        for _ in 0...ledcount {
+        for _ in 1...ledcount {
             let r = rgb.0,
                 g = rgb.1,
                 b = rgb.2
