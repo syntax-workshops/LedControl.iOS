@@ -8,18 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		D51CAEB31C3D94780025EFED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51CAEB21C3D94780025EFED /* AppDelegate.swift */; };
-		D51CAEB51C3D94780025EFED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51CAEB41C3D94780025EFED /* ViewController.swift */; };
+		D51CAEB51C3D94780025EFED /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51CAEB41C3D94780025EFED /* ColorPickerViewController.swift */; };
 		D51CAEB81C3D94780025EFED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D51CAEB61C3D94780025EFED /* Main.storyboard */; };
 		D51CAEBA1C3D94780025EFED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D51CAEB91C3D94780025EFED /* Assets.xcassets */; };
 		D51CAEBD1C3D94780025EFED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D51CAEBB1C3D94780025EFED /* LaunchScreen.storyboard */; };
 		D51CAEC51C3D94920025EFED /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51CAEC41C3D94920025EFED /* UDPClient.swift */; };
 		D51CAEC91C3D97D70025EFED /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = D51CAEC81C3D97D70025EFED /* ISColorWheel.m */; };
+		D5A3B58C1C9B539B0002CF40 /* LedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3B58B1C9B539B0002CF40 /* LedStrip.swift */; };
+		D5A3B58E1C9B53BE0002CF40 /* UIColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3B58D1C9B53BE0002CF40 /* UIColor+RGB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D51CAEAF1C3D94770025EFED /* LEDControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LEDControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D51CAEB21C3D94780025EFED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D51CAEB41C3D94780025EFED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D51CAEB41C3D94780025EFED /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		D51CAEB71C3D94780025EFED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D51CAEB91C3D94780025EFED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D51CAEBC1C3D94780025EFED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -28,6 +30,8 @@
 		D51CAEC61C3D97D70025EFED /* LEDControl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LEDControl-Bridging-Header.h"; sourceTree = "<group>"; };
 		D51CAEC71C3D97D70025EFED /* ISColorWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISColorWheel.h; sourceTree = "<group>"; };
 		D51CAEC81C3D97D70025EFED /* ISColorWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISColorWheel.m; sourceTree = "<group>"; };
+		D5A3B58B1C9B539B0002CF40 /* LedStrip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedStrip.swift; sourceTree = "<group>"; };
+		D5A3B58D1C9B53BE0002CF40 /* UIColor+RGB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+RGB.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,17 +65,27 @@
 			isa = PBXGroup;
 			children = (
 				D51CAEB21C3D94780025EFED /* AppDelegate.swift */,
-				D51CAEB41C3D94780025EFED /* ViewController.swift */,
+				D51CAEB41C3D94780025EFED /* ColorPickerViewController.swift */,
+				D5A3B58B1C9B539B0002CF40 /* LedStrip.swift */,
 				D51CAEC41C3D94920025EFED /* UDPClient.swift */,
+				D5A3B58D1C9B53BE0002CF40 /* UIColor+RGB.swift */,
 				D51CAEC71C3D97D70025EFED /* ISColorWheel.h */,
 				D51CAEC81C3D97D70025EFED /* ISColorWheel.m */,
-				D51CAEC61C3D97D70025EFED /* LEDControl-Bridging-Header.h */,
+				D5A3B58F1C9B53D00002CF40 /* Supporting Files */,
 				D51CAEB61C3D94780025EFED /* Main.storyboard */,
 				D51CAEB91C3D94780025EFED /* Assets.xcassets */,
 				D51CAEBB1C3D94780025EFED /* LaunchScreen.storyboard */,
-				D51CAEBE1C3D94780025EFED /* Info.plist */,
 			);
 			path = LEDControl;
+			sourceTree = "<group>";
+		};
+		D5A3B58F1C9B53D00002CF40 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D51CAEC61C3D97D70025EFED /* LEDControl-Bridging-Header.h */,
+				D51CAEBE1C3D94780025EFED /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,9 +161,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D51CAEC51C3D94920025EFED /* UDPClient.swift in Sources */,
+				D5A3B58E1C9B53BE0002CF40 /* UIColor+RGB.swift in Sources */,
 				D51CAEC91C3D97D70025EFED /* ISColorWheel.m in Sources */,
-				D51CAEB51C3D94780025EFED /* ViewController.swift in Sources */,
+				D51CAEB51C3D94780025EFED /* ColorPickerViewController.swift in Sources */,
 				D51CAEB31C3D94780025EFED /* AppDelegate.swift in Sources */,
+				D5A3B58C1C9B539B0002CF40 /* LedStrip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +279,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LEDControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.duckson.LEDControl;
@@ -277,6 +294,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LEDControl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.duckson.LEDControl;

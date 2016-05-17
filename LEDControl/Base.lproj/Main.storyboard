@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10109" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10083"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Color Picker View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LEDControl" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ColorPickerViewController" customModule="LEDControl" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -27,18 +27,10 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="io1-Sp-SD6">
-                                <rect key="frame" x="60" y="68" width="480" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="135" id="yYd-jI-qAo"/>
-                                </constraints>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="io1-Sp-SD6">
+                                <rect key="frame" x="20" y="68" width="470" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="yYd-jI-qAo"/>
-                                    </mask>
-                                </variation>
                                 <connections>
                                     <action selector="ipAddressChanged:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="0ya-9D-n45"/>
                                 </connections>
@@ -48,7 +40,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="IP-adres" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1e-5a-OQf">
-                                <rect key="frame" x="40" y="40" width="520" height="20.5"/>
+                                <rect key="frame" x="28" y="40" width="462" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -59,52 +51,52 @@
                                     <action selector="brightnessSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="KIm-Hh-lAG"/>
                                 </connections>
                             </slider>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j8v-EB-Rdv">
+                                <rect key="frame" x="498" y="69" width="82" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="countChanged:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="D6H-sD-6id"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LED aantal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVW-XE-KZe">
+                                <rect key="frame" x="498" y="40" width="82" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="x1e-5a-OQf" secondAttribute="trailing" constant="20" id="1KF-wf-i9m"/>
-                            <constraint firstItem="Vip-tQ-ilL" firstAttribute="top" secondItem="x1e-5a-OQf" secondAttribute="bottom" constant="34" id="3AP-Q4-vHl"/>
+                            <constraint firstItem="uVW-XE-KZe" firstAttribute="width" secondItem="j8v-EB-Rdv" secondAttribute="width" id="3LX-do-4sV"/>
+                            <constraint firstItem="uVW-XE-KZe" firstAttribute="centerX" secondItem="j8v-EB-Rdv" secondAttribute="centerX" id="4zl-HD-kL2"/>
                             <constraint firstItem="QWR-4T-b0f" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="6nG-Ex-PwA"/>
-                            <constraint firstItem="Vip-tQ-ilL" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="74" id="7oR-es-9c3"/>
-                            <constraint firstItem="NSW-OD-CqP" firstAttribute="top" secondItem="QWR-4T-b0f" secondAttribute="bottom" constant="8" id="8MO-0I-CP1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Vip-tQ-ilL" secondAttribute="trailing" id="BxD-h6-wph"/>
+                            <constraint firstItem="j8v-EB-Rdv" firstAttribute="leading" secondItem="io1-Sp-SD6" secondAttribute="trailing" constant="8" id="F3W-wx-DSk"/>
                             <constraint firstItem="QWR-4T-b0f" firstAttribute="top" secondItem="Vip-tQ-ilL" secondAttribute="bottom" constant="8" id="Gnp-4k-nht"/>
-                            <constraint firstItem="NSW-OD-CqP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="LKh-rK-foK"/>
+                            <constraint firstItem="j8v-EB-Rdv" firstAttribute="top" secondItem="uVW-XE-KZe" secondAttribute="bottom" constant="8" id="KJm-2C-xl5"/>
                             <constraint firstItem="Vip-tQ-ilL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="NbT-j0-XMn"/>
-                            <constraint firstItem="io1-Sp-SD6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="Osw-ih-iGc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NSW-OD-CqP" secondAttribute="trailing" constant="20" id="PKp-hy-y8O"/>
-                            <constraint firstItem="x1e-5a-OQf" firstAttribute="leading" secondItem="io1-Sp-SD6" secondAttribute="trailing" constant="40" id="RsV-SB-b0b"/>
                             <constraint firstItem="io1-Sp-SD6" firstAttribute="top" secondItem="x1e-5a-OQf" secondAttribute="bottom" constant="8" id="Tb4-3o-oWF"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NSW-OD-CqP" secondAttribute="bottom" constant="20" id="UhV-Vf-MnW"/>
+                            <constraint firstItem="io1-Sp-SD6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Vbm-lD-YcG"/>
                             <constraint firstItem="Vip-tQ-ilL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YcZ-m4-82N"/>
+                            <constraint firstItem="x1e-5a-OQf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="bAp-Vp-85G"/>
                             <constraint firstItem="NSW-OD-CqP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="buN-x6-PlV"/>
-                            <constraint firstItem="io1-Sp-SD6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="icH-xm-DT8"/>
+                            <constraint firstItem="uVW-XE-KZe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="i0Y-TS-CXC"/>
+                            <constraint firstItem="j8v-EB-Rdv" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="kCj-wy-2gp"/>
                             <constraint firstItem="x1e-5a-OQf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="40" id="loO-sc-h8p"/>
                             <constraint firstItem="NSW-OD-CqP" firstAttribute="top" secondItem="QWR-4T-b0f" secondAttribute="bottom" constant="20" id="m5j-Ot-GaO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="io1-Sp-SD6" secondAttribute="trailing" constant="40" id="n0M-IK-YWf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QWR-4T-b0f" secondAttribute="trailing" constant="20" id="oZG-lK-jBn"/>
-                            <constraint firstItem="x1e-5a-OQf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="pEP-Tj-F6g"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NSW-OD-CqP" secondAttribute="trailing" constant="40" id="sTx-Gf-ynl"/>
+                            <constraint firstItem="uVW-XE-KZe" firstAttribute="leading" secondItem="x1e-5a-OQf" secondAttribute="trailing" constant="8" id="rov-iF-eTy"/>
                             <constraint firstItem="Vip-tQ-ilL" firstAttribute="top" secondItem="io1-Sp-SD6" secondAttribute="bottom" constant="8" id="z7v-Yj-hOo"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="RsV-SB-b0b"/>
-                                <exclude reference="Osw-ih-iGc"/>
-                                <exclude reference="3AP-Q4-vHl"/>
-                                <exclude reference="7oR-es-9c3"/>
-                                <exclude reference="BxD-h6-wph"/>
-                                <exclude reference="8MO-0I-CP1"/>
-                                <exclude reference="LKh-rK-foK"/>
-                                <exclude reference="sTx-Gf-ynl"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="1uZ-aV-G5j" appends="YES" id="QOG-ky-vlP"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="colorWheelView" destination="Vip-tQ-ilL" id="GBI-Gl-7Ea"/>
+                        <outlet property="countTextField" destination="j8v-EB-Rdv" id="Rh8-xf-4FR"/>
                         <outlet property="ipAddress" destination="io1-Sp-SD6" id="b0f-1F-N9G"/>
                     </connections>
                 </viewController>
