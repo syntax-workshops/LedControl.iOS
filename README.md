@@ -17,9 +17,8 @@ The app works by sending R, G and B bytes for each LED over UDP. For example, if
 
 ## Installation
 
-* Install [NodeMCU firmware](https://github.com/nodemcu/nodemcu-firmware/) on your esp8266 module.
-* Edit the file `udp_ledstrip.lua`, copy it over, and configure it to run automatically.
-* Install the app and configure the IP address.
+* Install LedControl.Nodemcu [as per its instructions](https://github.com/syntax-workshops/LedControl.Nodemcu/blob/master/README.md).
+* Install the app on your phone and set the correct IP address and LED count.
 
 ## Acknowledgements
 
