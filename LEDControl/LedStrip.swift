@@ -19,9 +19,13 @@ class LEDStrip {
   var color: UIColor = UIColor.whiteColor()
   var brightness: CGFloat = 1.0
 
-  init(count: Int) {
+  convenience init(userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+    self.init(ipAddress: userDefaults.stringForKey("ledStripIpAddress")!, count: userDefaults.integerForKey("ledStripCount"))
+  }
+
+  init(ipAddress: String, count: Int) {
     ledcount = count
-    ip = NSUserDefaults.standardUserDefaults().stringForKey("ledStripIpAddress") ?? "192.168.1.42"
+    ip = ipAddress
 
     udpClient = UDPClient(ip: ip, port: port)
   }
@@ -31,6 +35,11 @@ class LEDStrip {
   }
 
   func send(message: [UInt8]) {
+    udpClient.send(message)
+  }
+
+  func clear() {
+    let message = [UInt8](count: ledcount * 3, repeatedValue: 0)
     udpClient.send(message)
   }
 }

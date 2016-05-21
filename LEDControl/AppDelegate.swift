@@ -9,7 +9,7 @@
 import UIKit
 
 let defaultPreferences = [
-  "ledStripIpAddress": "192.168.1.221",
+  "ledStripIpAddress": "192.168.1.42",
   "ledStripPort": 80,
   "ledStripCount": 30,
 ]
@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
     NSUserDefaults.standardUserDefaults().registerDefaults(defaultPreferences)
+
     return true
   }
 

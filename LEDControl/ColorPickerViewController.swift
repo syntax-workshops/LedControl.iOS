@@ -8,39 +8,45 @@
 
 import UIKit
 
-class ColorPickerViewController: UIViewController, ISColorWheelDelegate {
+func frameForColorWheel(inView view: UIView) -> CGRect {
+  let size = view.bounds.size
+  let wheelSize = CGSizeMake(size.width * 0.9, size.width * 0.9);
+
+  return CGRect(
+    x: size.width / 2 - wheelSize.width / 2 - 16, // Yay, ugly UI code
+    y: size.height * 0.1,
+    width: wheelSize.width,
+    height: wheelSize.height
+  )
+}
+
+class ColorPickerViewController: UIViewController {
 
   var strip: LEDStrip!
+  var colorWheel: ISColorWheel!
+  var brightnessChange: CGFloat = 0
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    strip = LEDStrip(count: NSUserDefaults.standardUserDefaults().integerForKey("ledStripCount"))
+    strip = LEDStrip()
 
     ipAddress.text = strip.ip
     countTextField.text = String(strip.ledcount)
 
     // Set up color wheel
-    let size = self.view.bounds.size
-    let wheelSize = CGSizeMake(size.width * 0.9, size.width * 0.9);
-
-    let colorWheel = ISColorWheel.init(frame: CGRectMake(
-      size.width / 2 - wheelSize.width / 2 - 16, // Yay, ugly UI code
-      size.height * 0.1,
-      wheelSize.width,
-      wheelSize.height
-    ))
+    colorWheel = ISColorWheel(frame: frameForColorWheel(inView: view))
     colorWheel.delegate = self
     colorWheel.borderWidth = 1
     self.colorWheelView.addSubview(colorWheel)
     colorWheel.continuous = true
   }
 
+  // MARK: Outlets
+
   @IBOutlet weak var countTextField: UITextField!
   @IBOutlet weak var colorWheelView: UIView!
   @IBOutlet weak var ipAddress: UITextField!
-
-  var brightnessChange: CGFloat = 0
 
   @IBAction func brightnessSliderChanged(sender: UISlider) {
     ipAddress.resignFirstResponder()
@@ -53,9 +59,12 @@ class ColorPickerViewController: UIViewController, ISColorWheelDelegate {
 
     if brightnessChange >= threshold {
       brightnessChange = 0
+      colorWheel.brightness = newBrightness
       sendMessage()
     }
   }
+
+  // MARK: Actions
 
   @IBAction func ipAddressChanged(sender: AnyObject) {
     guard let newAddress = ipAddress.text else { return }
@@ -73,12 +82,23 @@ class ColorPickerViewController: UIViewController, ISColorWheelDelegate {
     NSUserDefaults.standardUserDefaults().setValue(countTextField.text, forKey: "ledStripCount")
   }
 
-  @IBAction func viewWasTapped(sender: AnyObject) {
-    ipAddress.resignFirstResponder()
-    countTextField.resignFirstResponder()
+  @IBAction func clearStripButtonPressed(sender: AnyObject) {
+    strip.clear()
   }
 
-  func sendMessage() {
+  @IBAction func viewWasTapped(sender: AnyObject) {
+    hideKeyboard()
+  }
+
+  // MARK: Logic
+
+  private func hideKeyboard() {
+    ipAddress.resignFirstResponder()
+    countTextField.resignFirstResponder()
+    sendMessage()
+  }
+
+  private func sendMessage() {
     let message = composeMessageFromColor(color: strip.color, ledcount: strip.ledcount, brightness: strip.brightness)
     strip.send(message)
   }
@@ -99,10 +119,25 @@ class ColorPickerViewController: UIViewController, ISColorWheelDelegate {
 
     return message
   }
+}
 
+extension ColorPickerViewController: ISColorWheelDelegate {
   func colorWheelDidChangeColor(colorWheel: ISColorWheel) {
     ipAddress.resignFirstResponder()
     strip.color = colorWheel.currentColor
     sendMessage()
+  }
+}
+
+extension ColorPickerViewController: UITextFieldDelegate {
+  func textFieldDidEndEditing(textField: UITextField) {
+    hideKeyboard()
+  }
+
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    if let text = textField.text where !text.isEmpty {
+      return true
+    }
+    return false
   }
 }
