@@ -10,7 +10,7 @@ import UIKit
 
 func frameForColorWheel(inView view: UIView) -> CGRect {
   let size = view.bounds.size
-  let wheelSize = CGSizeMake(size.width * 0.9, size.width * 0.9);
+  let wheelSize = CGSize(width: size.width * 0.9, height: size.width * 0.9);
 
   return CGRect(
     x: size.width / 2 - wheelSize.width / 2 - 16, // Yay, ugly UI code
@@ -48,7 +48,7 @@ class ColorPickerViewController: UIViewController {
   @IBOutlet weak var colorWheelView: UIView!
   @IBOutlet weak var ipAddress: UITextField!
 
-  @IBAction func brightnessSliderChanged(sender: UISlider) {
+  @IBAction func brightnessSliderChanged(_ sender: UISlider) {
     ipAddress.resignFirstResponder()
 
     let oldBrightness = strip.brightness
@@ -66,44 +66,44 @@ class ColorPickerViewController: UIViewController {
 
   // MARK: Actions
 
-  @IBAction func ipAddressChanged(sender: AnyObject) {
+  @IBAction func ipAddressChanged(_ sender: AnyObject) {
     guard let newAddress = ipAddress.text else { return }
 
     strip.ip = newAddress
-    NSUserDefaults.standardUserDefaults().setValue(newAddress, forKey: "ledStripIpAddress")
+    UserDefaults.standard.setValue(newAddress, forKey: "ledStripIpAddress")
 
     strip.reload()
   }
 
-  @IBAction func countChanged(sender: AnyObject) {
-    guard let text = countTextField.text, count = Int(text) where count >= 0 else { return }
+  @IBAction func countChanged(_ sender: AnyObject) {
+    guard let text = countTextField.text, let count = Int(text) , count >= 0 else { return }
 
     strip.ledcount = count
-    NSUserDefaults.standardUserDefaults().setValue(countTextField.text, forKey: "ledStripCount")
+    UserDefaults.standard.setValue(countTextField.text, forKey: "ledStripCount")
   }
 
-  @IBAction func clearStripButtonPressed(sender: AnyObject) {
+  @IBAction func clearStripButtonPressed(_ sender: AnyObject) {
     strip.clear()
   }
 
-  @IBAction func viewWasTapped(sender: AnyObject) {
+  @IBAction func viewWasTapped(_ sender: AnyObject) {
     hideKeyboard()
   }
 
   // MARK: Logic
 
-  private func hideKeyboard() {
+  fileprivate func hideKeyboard() {
     ipAddress.resignFirstResponder()
     countTextField.resignFirstResponder()
     sendMessage()
   }
 
-  private func sendMessage() {
+  fileprivate func sendMessage() {
     let message = composeMessageFromColor(color: strip.color, ledcount: strip.ledcount, brightness: strip.brightness)
     strip.send(message)
   }
 
-  private func composeMessageFromColor(color color: UIColor, ledcount: Int, brightness: CGFloat) -> [UInt8] {
+  fileprivate func composeMessageFromColor(color: UIColor, ledcount: Int, brightness: CGFloat) -> [UInt8] {
     var message = [UInt8]()
 
     let rgb = color.rgb()
@@ -122,7 +122,7 @@ class ColorPickerViewController: UIViewController {
 }
 
 extension ColorPickerViewController: ISColorWheelDelegate {
-  func colorWheelDidChangeColor(colorWheel: ISColorWheel) {
+  func colorWheelDidChangeColor(_ colorWheel: ISColorWheel) {
     ipAddress.resignFirstResponder()
     strip.color = colorWheel.currentColor
     sendMessage()
@@ -130,12 +130,12 @@ extension ColorPickerViewController: ISColorWheelDelegate {
 }
 
 extension ColorPickerViewController: UITextFieldDelegate {
-  func textFieldDidEndEditing(textField: UITextField) {
+  func textFieldDidEndEditing(_ textField: UITextField) {
     hideKeyboard()
   }
 
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
-    if let text = textField.text where !text.isEmpty {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let text = textField.text , !text.isEmpty {
       return true
     }
     return false

@@ -8,7 +8,7 @@
 
 import Foundation
 
-func htons(value: CUnsignedShort) -> CUnsignedShort {
+func htons(_ value: CUnsignedShort) -> CUnsignedShort {
   return (value << 8) + (value >> 8);
 }
 
@@ -26,7 +26,7 @@ class UDPClient {
     self.port = port
     self.ip = ip
     self.addr = sockaddr_in(
-      sin_len:    __uint8_t(sizeof(sockaddr_in)),
+      sin_len:    __uint8_t(MemoryLayout<sockaddr_in>.size),
       sin_family: sa_family_t(AF_INET),
       sin_port:   htons(port),
       sin_addr:   INADDR_ANY,
@@ -37,19 +37,22 @@ class UDPClient {
     }
   }
 
-  func send(message: [UInt8]) {
-    withUnsafePointer(&addr) { ptr -> Void in
-      let addrptr = UnsafePointer<sockaddr>(ptr)
-      sendto(fd, message, message.count, 0, addrptr, socklen_t(addr.sin_len))
+  // Here be dragons!
+
+  func send(_ message: [UInt8]) {
+    withUnsafePointer(to: &addr) { ptr -> Void in
+      _ = ptr.withMemoryRebound(to: sockaddr.self, capacity: 1) { addrptr in
+        sendto(fd, message, message.count, 0, addrptr, socklen_t(addr.sin_len))
+      }
     }
   }
 
-  func send(message: String) {
+  func send(_ message: String) {
     message.withCString { cstr -> Void in
-      withUnsafePointer(&addr) { ptr -> Void in
-        let addrptr = UnsafePointer<sockaddr>(ptr)
-        sendto(fd, cstr, Int(strlen(cstr)), 0,
-          addrptr, socklen_t(addr.sin_len))
+      withUnsafePointer(to: &addr) { ptr -> Void in
+        _ = ptr.withMemoryRebound(to: sockaddr.self, capacity: 1) { addrptr in
+          sendto(fd, cstr, Int(strlen(cstr)), 0, addrptr, socklen_t(addr.sin_len))
+        }
       }
     }
   }
