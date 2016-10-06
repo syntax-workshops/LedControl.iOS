@@ -38,7 +38,7 @@ class ColorPickerViewController: UIViewController {
     colorWheel = ISColorWheel(frame: frameForColorWheel(inView: view))
     colorWheel.delegate = self
     colorWheel.borderWidth = 1
-    self.colorWheelView.addSubview(colorWheel)
+    colorWheelView.addSubview(colorWheel)
     colorWheel.continuous = true
   }
 
@@ -88,6 +88,7 @@ class ColorPickerViewController: UIViewController {
 
   @IBAction func viewWasTapped(_ sender: AnyObject) {
     hideKeyboard()
+    sendMessage()
   }
 
   // MARK: Logic
@@ -95,7 +96,6 @@ class ColorPickerViewController: UIViewController {
   fileprivate func hideKeyboard() {
     ipAddress.resignFirstResponder()
     countTextField.resignFirstResponder()
-    sendMessage()
   }
 
   fileprivate func sendMessage() {
@@ -103,7 +103,7 @@ class ColorPickerViewController: UIViewController {
     strip.send(message)
   }
 
-  fileprivate func composeMessageFromColor(color: UIColor, ledcount: Int, brightness: CGFloat) -> [UInt8] {
+  private func composeMessageFromColor(color: UIColor, ledcount: Int, brightness: CGFloat) -> [UInt8] {
     var message = [UInt8]()
 
     let rgb = color.rgb()
@@ -123,20 +123,17 @@ class ColorPickerViewController: UIViewController {
 
 extension ColorPickerViewController: ISColorWheelDelegate {
   func colorWheelDidChangeColor(_ colorWheel: ISColorWheel) {
-    ipAddress.resignFirstResponder()
+    hideKeyboard()
     strip.color = colorWheel.currentColor
     sendMessage()
   }
 }
 
 extension ColorPickerViewController: UITextFieldDelegate {
-  func textFieldDidEndEditing(_ textField: UITextField) {
-    hideKeyboard()
-  }
-
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    if let text = textField.text , !text.isEmpty {
-      return true
+    if let text = textField.text, !text.isEmpty {
+      hideKeyboard()
+      sendMessage()
     }
     return false
   }
